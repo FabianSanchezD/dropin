@@ -1,6 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="pt-20 p-8 min-h-screen bg-neutral-900">
       <div className="pt-12 flex justify-center">
@@ -16,7 +19,7 @@ const Home = () => {
       </div>
 
       <div className="flex justify-center">
-        <button className='bg-gray-200 text-black font-semibold py-2 px-4 m-5 rounded-lg shadow-lg hover:bg-gray-300 transition duration-300'>
+        <button className='bg-gray-200 text-black font-semibold py-2 px-4 m-5 rounded-lg shadow-lg hover:bg-gray-300 transition duration-300' onClick={() => navigate('/login')}>
         Create a Meetup
         </button>
       </div>
@@ -73,7 +76,7 @@ const Home = () => {
       </div>
 
       <div className="flex justify-center">
-        <button className='bg-gray-200 text-black font-semibold py-2 px-4 m-5 rounded-lg shadow-lg hover:bg-gray-300 transition duration-300'>
+        <button className='bg-gray-200 text-black font-semibold py-2 px-4 m-5 rounded-lg shadow-lg hover:bg-gray-300 transition duration-300' onClick={() => navigate('/login')}>
         Log in to get started now!
         </button>
       </div>

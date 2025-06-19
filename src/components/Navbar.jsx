@@ -1,9 +1,17 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { supabase } from '../supabase-client'
 
 const Navbar = () => {
   let location = useLocation();
-   
+  let navigate = useNavigate();
+
+  async function signOutUser() {
+    const { error } = await supabase.auth.signOut();
+    navigate('/login');
+  }
+
   if (location.pathname === '/dashboard') {
      return (
     <>
@@ -16,7 +24,7 @@ const Navbar = () => {
         </Link>
         <div className='flex items-center gap-5 text-black font-sans font-semibold'>
             <Link to='/' className='text-white hover:text-gray-300'>Home</Link>
-            <Link className='text-white hover:text-gray-300'>Logout</Link>
+            <button className='text-white hover:text-gray-300' onClick={() => signOutUser()}>Sign Out</button>
             <Link to='/account' className='text-white hover:text-gray-300'>Account</Link>
 
         </div>
