@@ -5,82 +5,177 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="pt-20 p-8 min-h-screen bg-neutral-900">
-      <div className="pt-12 flex justify-center">
-          <div className='w-1/4 text-4xl font-bold text-white mb-4'>
-            <h2>No plans? No problem. </h2>
-            <h1 className='pt-3'>Just Drop-In.</h1>
-            <p className='pt-7 text-2xl font-semibold'>Join Impromptu Meetings on the go: study, read, chat, connect and much more!</p>
+    <div className="pt-20 min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
+        <div className="relative px-8 py-16">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+              <div className="lg:w-1/2 space-y-8">
+                <div className="space-y-4">
+                  <h2 className="text-5xl lg:text-6xl font-bold text-white leading-tight">
+                    No plans? 
+                    <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                      {" "}No problem.
+                    </span>
+                  </h2>
+                  <h1 className="text-4xl lg:text-5xl font-bold text-white">
+                    Just <span className="text-blue-400">Drop-In</span>.
+                  </h1>
+                </div>
+                <p className="text-xl lg:text-2xl text-gray-300 leading-relaxed">
+                  Join impromptu meetings on the go: study, read, chat, connect and much more!
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button 
+                    className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
+                    onClick={() => navigate('/login')}
+                  >
+                    Create a Meetup
+                  </button>
+                  <button 
+                    className="border-2 border-blue-400 text-blue-400 font-semibold py-4 px-8 rounded-xl hover:bg-blue-400 hover:text-white transition-all duration-300"
+                    onClick={() => navigate('/about')}
+                  >
+                    Learn More
+                  </button>
+                </div>
+              </div>
+              <div className="lg:w-1/2 flex justify-center">
+                <div className="relative">
+                  <div className="w-80 h-80 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-full blur-3xl"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                      <div className="text-center text-white">
+                        <div className="text-6xl mb-4">🚀</div>
+                        <p className="text-lg font-semibold">Connect Instantly</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className='w-1/4 text-4xl font-bold text-white mb-4'>
-          {/* an image will go here */}
-          <p>An image will go here!</p>
+        </div>
+      </div>
+
+      {/* How It Works Section */}
+      <div className="py-20 px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl lg:text-5xl font-bold text-center text-white mb-16">
+            How It <span className="text-blue-400">Works</span>
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                step: "01",
+                icon: "✨",
+                title: "Create a Meetup",
+                description: "Set up your spontaneous gathering in seconds with our simple interface."
+              },
+              {
+                step: "02",
+                icon: "📢",
+                title: "Share with Network",
+                description: "Instantly notify your campus community or close friends about your meetup."
+              },
+              {
+                step: "03",
+                icon: "🤝",
+                title: "Drop-In & Connect",
+                description: "Meet new people, study together, or just hang out - the choice is yours!"
+              }
+            ].map((item, index) => (
+              <div key={index} className="relative group">
+                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-blue-400/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                  <div className="text-right text-blue-400/50 font-bold text-sm mb-4">{item.step}</div>
+                  <div className="text-5xl mb-6">{item.icon}</div>
+                  <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
+                  <p className="text-gray-300 leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
+        </div>
       </div>
 
-      <div className="flex justify-center">
-        <button className='bg-gray-200 text-black font-semibold py-2 px-4 m-5 rounded-lg shadow-lg hover:bg-gray-300 transition duration-300' onClick={() => navigate('/login')}>
-        Create a Meetup
-        </button>
-      </div>
-
-      <div className="w-full text-4xl font-bold text-white mb-4">
-          <h1 className='flex justify-center pt-5'>How It Works:</h1>
-          <div className='flex justify-center pt-5'>
-          <div className='w-1/2 items-center text-center'>
-            <ul className='text-3xl pt-5 font-semibold list-disc'>
-              <li>
-                Create a meetup
-                {/* image could go here */}
-              </li>
-              <li>
-                Share with your network or campus
-                {/* image could go here */}
-              </li>
-              <li>
-                Drop-In to meet new people and have fun (or study)!
-                {/* image could go here */}
-              </li>
-            </ul>
+      {/* Live Events Section */}
+      <div className="py-20 px-8 bg-white/5">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-8">
+            Live & <span className="text-green-400">Upcoming</span> Events
+          </h2>
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-12 border border-white/20">
+            <div className="text-6xl mb-6">🎯</div>
+            <p className="text-xl text-gray-300 mb-8">
+              Events will appear here once you're logged in and the platform is active!
+            </p>
+            <button 
+              className="bg-green-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-600 transition-colors duration-300"
+              onClick={() => navigate('/login')}
+            >
+              Join Now to See Events
+            </button>
           </div>
+        </div>
+      </div>
+
+      {/* Why Drop-In Section */}
+      <div className="py-20 px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl lg:text-5xl font-bold text-center text-white mb-16">
+            Why use <span className="text-purple-400">Drop-In</span>?
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: "🎓",
+                title: "Meet Classmates",
+                description: "Connect with students in your courses and build study groups effortlessly."
+              },
+              {
+                icon: "☕",
+                title: "Study or Chill",
+                description: "Whether you need focus time or relaxation, find the perfect group atmosphere."
+              },
+              {
+                icon: "⚡",
+                title: "No Scheduling Hassle",
+                description: "Skip the endless planning - just drop in when you're ready to connect."
+              }
+            ].map((item, index) => (
+              <div key={index} className="text-center group">
+                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-purple-400/50 transition-all duration-300 group-hover:transform group-hover:scale-105">
+                  <div className="text-5xl mb-6">{item.icon}</div>
+                  <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
+                  <p className="text-gray-300 leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
+        </div>
       </div>
 
-      <div className=" pt-8 w-full text-4xl font-bold text-white mb-4 flex justify-center items-center">
-        <h1>Live/Upcoming Events</h1>
-        {/* here there will be a feed of live meetups */}
-      </div>
-
-      <div className=" pt-8 w-full text-4xl font-bold text-white mb-4 flex justify-center items-center">
-        <h1>Why use Drop-In?</h1>
-        {/* here there will be a feed of live meetups */}
-      </div>
-
-      <div className=" pt-3 w-full text-4xl font-bold text-white mb-4 flex justify-center items-center">
-        <div className='w-1/2 items-center text-center'>
-            <ul className='text-3xl font-semibold list-disc'>
-              <li>
-                Meet classmates in your courses
-                {/* image could go here */}
-              </li>
-              <li>
-                Study or chill together
-                {/* image could go here */}
-              </li>
-              <li>
-                Don't waste time scheduling - just drop-in!
-                {/* image could go here */}
-              </li>
-            </ul>
+      {/* CTA Section */}
+      <div className="py-20 px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm rounded-3xl p-12 border border-white/20">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+              Ready to start connecting?
+            </h2>
+            <p className="text-xl text-gray-300 mb-8">
+              Join thousands of students who are already making spontaneous connections.
+            </p>
+            <button 
+              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-4 px-12 rounded-xl shadow-lg hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300"
+              onClick={() => navigate('/login')}
+            >
+              Get Started Now
+            </button>
           </div>
+        </div>
       </div>
-
-      <div className="flex justify-center">
-        <button className='bg-gray-200 text-black font-semibold py-2 px-4 m-5 rounded-lg shadow-lg hover:bg-gray-300 transition duration-300' onClick={() => navigate('/login')}>
-        Log in to get started now!
-        </button>
-      </div>
-
     </div>
   )
 }
