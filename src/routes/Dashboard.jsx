@@ -26,6 +26,7 @@ const Dashboard = () => {
           try {
             console.log('User authenticated, fetching meetups...');
             console.log('User ID:', userData.user.id);
+            console.log(userData)
             
             const { data: fetchedData, error: fetchedError } = await supabase
               .from('meetups')

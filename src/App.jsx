@@ -6,7 +6,10 @@ import Login from './routes/Login'
 import NotFound from './routes/NotFound'
 import MainLayout from './layouts/MainLayout';
 import DashboardLayout from './layouts/DashboardLayout';
+import ProfileLayout from './layouts/ProfileLayout';
 import Dashboard from './routes/Dashboard'
+import AccountDetails from './routes/AccountDetails';
+import ProfileStarter from './routes/ProfileStarter';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,11 +20,16 @@ const router = createBrowserRouter(
     <Route path='/login' element= {<Login />} />
     <Route path='*' element= {<NotFound />} />
   </Route>
-
+ 
     <Route path='/dashboard' element={<DashboardLayout />}>
-    <Route index element={<Dashboard />} />
+      <Route index element={<Dashboard />} />
     </Route>
-    </>
+
+    <Route path='/profile' element={<ProfileLayout />}>
+      <Route index element={ <AccountDetails />} />
+      <Route path='starter' element={ <ProfileStarter />} />
+    </Route>
+    </> 
   )
 );
 
