@@ -125,7 +125,7 @@ const Dashboard = () => {
       <div className="px-8 py-8">
         <div className="max-w-7xl mx-auto">
             {userProfileName === null ? <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8">Welcome! 👋
-            <span className="text-blue-400 text-sm ml-2">Want your name here? Go to Account and update your data!</span></h1>
+            <span className="text-blue-400 text-sm ml-2">Want your name here? Go to Profile and update your data!</span></h1>
             :
             <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8">Welcome, <span className="text-blue-400">{userProfileName}</span>! 👋</h1>}
 

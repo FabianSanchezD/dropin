@@ -34,10 +34,10 @@ const Navbar = () => {
               <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full'></span>
             </Link>
             <Link 
-              to='/account' 
+              to='/profile' 
               className='text-gray-300 hover:text-white font-medium transition-colors duration-300 relative group'
             >
-              Account
+              Profile
               <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300 group-hover:w-full'></span>
             </Link>
             <button 
