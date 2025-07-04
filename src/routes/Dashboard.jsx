@@ -12,6 +12,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [userProfileName, setUserProfileName] = useState(null);
 
   useEffect(() => {
     async function initializeDashboard() {
@@ -26,26 +27,42 @@ const Dashboard = () => {
           try {
             console.log('User authenticated, fetching meetups...');
             console.log('User ID:', userData.user.id);
-            console.log(userData)
+            const userId = userData.user.id;
+            const currentTime = new Date();
+            console.log('Current time:', currentTime);
+            const userConfirmedAt = new Date(userData.user.confirmed_at);
+            console.log('User confirmed at:', userConfirmedAt);
+            const difference = currentTime - userConfirmedAt; // Fixed: current time minus confirmed time
+            console.log('Time difference (ms):', difference);
+            
+            // If user was confirmed less than 45 seconds ago, redirect to profile setup
+            if (difference < 45000) {
+              console.log('New user detected, redirecting to profile setup');
+              navigate('/profile/starter');
+              return;
+            }
+
+            // Fetch user profile data
+            const { data: fetchedUserData, error: fetchedUserError } = await supabase
+              .from('users')
+              .select('*')
+              .eq('id', userId); // Fixed: use .eq() instead of .match()
+
+              if (fetchedUserData && fetchedUserData.length > 0) {
+                const NameOfTheUser = fetchedUserData[0].name
+                console.log(NameOfTheUser, "username")
+                setUserProfileName(NameOfTheUser); // Store the name in state
+              } else {
+                const NameOfTheUser = null
+              }
             
             const { data: fetchedData, error: fetchedError } = await supabase
               .from('meetups')
               .select('*');
 
-            console.log('Raw Supabase response:', { data: fetchedData, error: fetchedError });
-
             if (fetchedError) {
               console.log('Error fetching meetups:', fetchedError);
               setError(fetchedError);
-              
-              // Try fetching as anonymous user to test RLS
-              console.log('Trying to fetch as anonymous user...');
-              const { data: anonData, error: anonError } = await supabase
-                .from('meetups')
-                .select('*')
-                .limit(1);
-              
-              console.log('Anonymous fetch result:', { anonData, anonError });
             } else {
               setData(fetchedData);
               console.log('Successfully fetched data:', fetchedData);
@@ -107,9 +124,10 @@ const Dashboard = () => {
     <div className="pt-20 min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900">
       <div className="px-8 py-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8">
-            Welcome back, <span className="text-blue-400">{userName}</span>! 👋
-          </h1>
+            {userProfileName === null ? <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8">Welcome! 👋
+            <span className="text-blue-400 text-sm ml-2">Want your name here? Go to Account and update your data!</span></h1>
+            :
+            <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8">Welcome, <span className="text-blue-400">{userProfileName}</span>! 👋</h1>}
 
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
