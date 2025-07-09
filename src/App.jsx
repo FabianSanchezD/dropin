@@ -8,7 +8,7 @@ import MainLayout from './layouts/MainLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 import ProfileLayout from './layouts/ProfileLayout';
 import Dashboard from './routes/Dashboard'
-import AccountDetails from './routes/AccountDetails';
+import ProfileDetails from './routes/ProfileDetails';
 import ProfileStarter from './routes/ProfileStarter';
 
 const router = createBrowserRouter(
@@ -26,7 +26,7 @@ const router = createBrowserRouter(
     </Route>
 
     <Route path='/profile' element={<ProfileLayout />}>
-      <Route index element={ <AccountDetails />} />
+      <Route index element={ <ProfileDetails />} />
       <Route path='starter' element={ <ProfileStarter />} />
     </Route>
     </> 
