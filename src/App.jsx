@@ -7,9 +7,10 @@ import NotFound from './routes/NotFound'
 import MainLayout from './layouts/MainLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 import ProfileLayout from './layouts/ProfileLayout';
-import Dashboard from './routes/Dashboard'
-import AccountDetails from './routes/AccountDetails';
+import Dashboard from './routes/Dashboard';
+import ProfileDetails from './routes/ProfileDetails';
 import ProfileStarter from './routes/ProfileStarter';
+import ProfileUpdater from './routes/ProfileUpdater';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,8 +27,9 @@ const router = createBrowserRouter(
     </Route>
 
     <Route path='/profile' element={<ProfileLayout />}>
-      <Route index element={ <AccountDetails />} />
+      <Route index element={ <ProfileDetails />} />
       <Route path='starter' element={ <ProfileStarter />} />
+      <Route path='updater' element={ <ProfileUpdater />} />
     </Route>
     </> 
   )
