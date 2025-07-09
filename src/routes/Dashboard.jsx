@@ -121,7 +121,7 @@ const Dashboard = () => {
   const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0];
 
   return (
-    <div className="pt-20 min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900">
+    <div className="pt-20 pb-24 min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900">
       <div className="px-8 py-8">
         <div className="max-w-7xl mx-auto">
             {userProfileName === null ? <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8">Welcome! 👋
@@ -209,7 +209,7 @@ const Dashboard = () => {
                 </div>
                 <div className="space-y-4">
                   {!data || data.length === 0 ? (
-                    <div className="bg-white/5 rounded-xl p-6 border border-white/10 text-center">
+                  <div className="bg-white/5 rounded-xl p-6 border border-white/10 text-center">
                       <div className="text-4xl mb-4">📅</div>
                       <h3 className="text-white font-semibold mb-2">No upcoming meetups</h3>
                       <p className="text-gray-400 text-sm mb-4">
@@ -248,49 +248,6 @@ const Dashboard = () => {
                       </Carousel>
                     </div>
                   )}
-                </div>
-              </div>
-
-              {/* Almost Full Meetups */}
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="text-2xl">🔥</div>
-                  <h2 className="text-xl font-bold text-white">Filling Up Fast</h2>
-                </div>
-                <div className="text-center py-8">
-                  <div className="text-4xl mb-4">⚡</div>
-                  <h3 className="text-white font-semibold mb-2">No popular meetups yet</h3>
-                  <p className="text-gray-400 text-sm mb-4">
-                    Popular meetups that are almost full will appear here.
-                  </p>
-                  <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300">
-                    Explore All
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Recent Activity */}
-          <div className="mt-12">
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="text-2xl">📊</div>
-                <h2 className="text-xl font-bold text-white">Recent Activity</h2>
-              </div>
-              <div className="text-center py-12">
-                <div className="text-5xl mb-4">🌟</div>
-                <h3 className="text-white font-semibold mb-2">Welcome to Drop-In!</h3>
-                <p className="text-gray-400 mb-6 max-w-md mx-auto">
-                  Your meetup activity and connections will show up here as you start using the platform.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
-                    Create Your First Meetup
-                  </button>
-                  <button className="border-2 border-blue-400 text-blue-400 font-semibold py-3 px-6 rounded-xl hover:bg-blue-400 hover:text-white transition-all duration-300">
-                    Explore Campus Events
-                  </button>
                 </div>
               </div>
             </div>
