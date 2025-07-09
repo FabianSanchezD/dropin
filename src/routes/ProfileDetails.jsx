@@ -10,6 +10,17 @@ const ProfileDetails = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  let interests = {"cal":"Cálculo y Álgebra Lineal",
+              "foc":"Fundamentos de Organización de Computadores",
+              "coffee": "Break de Café",
+              "introp":"Introducción a la Programación",
+              "discrete":"Matemática Discreta"
+              }
+
+  let campus = {"teccar":"Tecnológico de Costa Rica Cartago",
+                "ucrsj":"Universidad de Costa Rica San José"
+  }
+
   useEffect(() => {
       async function initializeProfileDetails() {
         try {
@@ -104,7 +115,7 @@ const ProfileDetails = () => {
                     <div>
                       <label className="block text-white font-semibold mb-2">Campus</label>
                       <p className="text-gray-300 bg-white/10 p-3 rounded-lg">
-                        {userProfileData[0].campus || 'Not set'}
+                        {campus[userProfileData[0].campus] || 'Not set'}
                       </p>
                     </div>
                     <div className="md:col-span-2">
@@ -114,7 +125,7 @@ const ProfileDetails = () => {
                           <div className="flex flex-wrap gap-2">
                             {userProfileData[0].interests.map((interest, index) => (
                               <span key={index} className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-sm">
-                                {interest}
+                                {interests[interest]}
                               </span>
                             ))}
                           </div>
@@ -124,8 +135,10 @@ const ProfileDetails = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="pt-6">
-                    <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+                  <div className="pt-6 text-center">
+                    <button 
+                    onClick={() => navigate('/profile/updater')}
+                    className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
                       Edit Profile
                     </button>
                   </div>
