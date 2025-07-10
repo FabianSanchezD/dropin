@@ -170,9 +170,6 @@ const MeetupPage = () => {
               <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 flex-1">
                 Join Meetup
               </button>
-              <button className="border-2 border-gray-400 text-gray-300 hover:text-white hover:border-white font-semibold py-3 px-6 rounded-xl transition-all duration-300">
-                Share
-              </button>
             </div>
           </div>
 
@@ -199,6 +196,36 @@ const MeetupPage = () => {
               </div>
             </div>
           </div>
+
+          {/* Attendees Section */}
+          <div className="mt-6">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <h3 className="text-white font-semibold mb-4">Attendees</h3>
+              <div className="space-y-3">
+                {meetup.attendees && meetup.attendees.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    {meetup.attendees.map((attendant, index) => (
+                      <div key={index} className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10">
+                        <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
+                          <span className="text-blue-400 font-semibold text-sm">
+                            {attendant ? attendant.charAt(0).toUpperCase() : 'A'}
+                          </span>
+                        </div>
+                        <p className="text-gray-300 font-medium">{attendant || 'Anonymous'}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="text-4xl mb-3">👥</div>
+                    <p className="text-gray-400">No attendees yet</p>
+                    <p className="text-gray-500 text-sm mt-1">Be the first to join this meetup!</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

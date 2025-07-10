@@ -218,6 +218,7 @@ const Dashboard = () => {
                           <div key={meetup.id} className="p-4 bg-white/10 rounded-lg ml-4" onClick={() => {navigate(`/meetup/${meetup.id}`)}}>
                             <h4 className="text-white font-semibold">{meetup.title || 'Unnamed Meetup'}</h4>
                             <p className="text-gray-300 text-sm">{meetup.description || 'No description'}</p>
+                            <p className="text-gray-300 text-xs pt-1">Created by {meetup.created_by || 'Anonymous'}</p>
                             <p className="text-blue-400 text-xs mt-2">{meetup.start_time || 'No date set'}</p>
                             <div className='text-blue-400 text-sm flex items-center'><FaLocationDot className='text-blue-400 mr-1'/> {meetup.location}</div>
                           </div>
