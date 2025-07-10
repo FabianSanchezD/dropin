@@ -129,29 +129,6 @@ const Dashboard = () => {
             :
             <h1 className="text-3xl lg:text-4xl font-bold text-white mb-8">Welcome, <span className="text-blue-400">{userProfileName}</span>! 👋</h1>}
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-400 text-sm font-medium">Your Meetups</p>
-                  <p className="text-2xl font-bold text-white">0</p>
-                </div>
-                <div className="text-3xl">📅</div>
-              </div>
-            </div>
-            
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-400 text-sm font-medium">Meetups Joined</p>
-                  <p className="text-2xl font-bold text-white">0</p>
-                </div>
-                <div className="text-3xl">🎯</div>
-              </div>
-            </div>
-          </div>
-
           {/* Main Content Grid */}
           <div className="grid lg:grid-cols-1 gap-8">
             {/* Personalized Meetups */}
@@ -213,7 +190,7 @@ const Dashboard = () => {
                       <div className="text-4xl mb-4">📅</div>
                       <h3 className="text-white font-semibold mb-2">No upcoming meetups</h3>
                       <p className="text-gray-400 text-sm mb-4">
-                        Schedule your first meetup or join others' events to see them here.
+                        Schedule a meetup or join others' events to see them here.
                       </p>
                       <button className="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300">
                         Browse Meetups

@@ -125,7 +125,7 @@ const ProfileUpdater = () => {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-3 mb-6">
+            <div className="inline-flex items-center gap-3 mb-6" onClick={() => navigate('/dashboard')}>
                 <img src="/dropin-icon.png" alt="DropIn Logo" className="w-14 h-14" />
                 <h1 className="text-4xl font-bold text-white">Drop-In</h1>
             </div>
