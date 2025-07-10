@@ -11,8 +11,7 @@ import Dashboard from './routes/Dashboard';
 import ProfileDetails from './routes/ProfileDetails';
 import ProfileStarter from './routes/ProfileStarter';
 import ProfileUpdater from './routes/ProfileUpdater';
-import MeetupPage from './routes/MeetupPage'
-import MeetupLayout from './layouts/MeetupLayout'
+import MeetupPage from './routes/MeetupPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +20,7 @@ const router = createBrowserRouter(
     <Route index element={ <Home /> }/> 
     <Route path='/about' element= {<About />} />
     <Route path='/login' element= {<Login />} />
+    <Route path='/meetup/:id' element={<MeetupPage />} />
     <Route path='*' element= {<NotFound />} />
   </Route>
  
@@ -33,16 +33,11 @@ const router = createBrowserRouter(
       <Route path='starter' element={ <ProfileStarter />} />
       <Route path='updater' element={ <ProfileUpdater />} />
     </Route>
-
-    <Route path='/meetup' element={<MeetupLayout />}>
-      <Route path=':id' element={<MeetupPage />} />
-    </Route>
     </> 
   )
 );
 
 const App = () => {
-
   return <RouterProvider router={router}/>
 }
 

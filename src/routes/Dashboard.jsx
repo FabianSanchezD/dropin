@@ -215,7 +215,7 @@ const Dashboard = () => {
                         itemClass="carousel-item-padding-40-px"
                       >
                         {data.map((meetup) => (
-                          <div key={meetup.id} className="p-4 bg-white/10 rounded-lg ml-4">
+                          <div key={meetup.id} className="p-4 bg-white/10 rounded-lg ml-4" onClick={() => {navigate(`/meetup/${meetup.id}`)}}>
                             <h4 className="text-white font-semibold">{meetup.title || 'Unnamed Meetup'}</h4>
                             <p className="text-gray-300 text-sm">{meetup.description || 'No description'}</p>
                             <p className="text-blue-400 text-xs mt-2">{meetup.start_time || 'No date set'}</p>
