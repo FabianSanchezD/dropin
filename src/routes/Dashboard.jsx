@@ -169,7 +169,7 @@ const Dashboard = () => {
                   <p className="text-gray-400 text-sm mb-4">
                     Be the first to start a spontaneous meetup on campus!
                   </p>
-                  <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300">
+                  <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300" onClick={() => {navigate('/meetup/create')}}>
                     Start Live Meetup
                   </button>
                 </div>
@@ -190,7 +190,7 @@ const Dashboard = () => {
                       <div className="text-4xl mb-4">📅</div>
                       <h3 className="text-white font-semibold mb-2">No upcoming meetups</h3>
                       <p className="text-gray-400 text-sm mb-4">
-                        Schedule a meetup or join others' events to see them here.
+                        Create a meetup or join others' events to see them here.
                       </p>
                       <button className="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300">
                         Browse Meetups

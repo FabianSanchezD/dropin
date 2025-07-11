@@ -12,6 +12,7 @@ import ProfileDetails from './routes/ProfileDetails';
 import ProfileStarter from './routes/ProfileStarter';
 import ProfileUpdater from './routes/ProfileUpdater';
 import MeetupPage from './routes/MeetupPage';
+import MeetupCreation from './routes/MeetupCreation';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
     <Route path='/about' element= {<About />} />
     <Route path='/login' element= {<Login />} />
     <Route path='/meetup/:id' element={<MeetupPage />} />
+    <Route path='/meetup/create' element={<MeetupCreation />} />
     <Route path='*' element= {<NotFound />} />
   </Route>
  

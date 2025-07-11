@@ -10,6 +10,17 @@ const MeetupPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
+
+  let interests = {"cal":"Cálculo y Álgebra Lineal",
+              "foc":"Fundamentos de Organización de Computadores",
+              "coffee": "Break de Café",
+              "introp":"Introducción a la Programación",
+              "discrete":"Matemática Discreta"
+              }
+
+  let campus = {"teccar":"Tecnológico de Costa Rica Cartago",
+                "ucrsj":"Universidad de Costa Rica San José"
+    }
   
   useEffect(() => {
     async function fetchMeetupData() {
@@ -190,10 +201,8 @@ const MeetupPage = () => {
             </div>
 
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-              <h3 className="text-white font-semibold mb-4">Meetup ID</h3>
-              <div className="bg-white/10 rounded-lg p-3">
-                <p className="text-gray-300 font-mono text-sm">{meetup.id}</p>
-              </div>
+              <h3 className="text-white font-semibold mb-5">Interest</h3>
+                <p className="text-white font-medium">{interests[meetup.interest]}</p>
             </div>
           </div>
 
