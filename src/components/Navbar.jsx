@@ -19,7 +19,7 @@ const Navbar = () => {
           <Link to='/' className="group">
             <div className='flex items-center gap-3'>
               <img src="/dropin-icon.png" alt="Logo" className='w-10 h-10 transition-transform duration-300 group-hover:scale-110' />
-              <span className='font-bold text-white text-2xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent'>
+              <span className='font-bold text-white text-2xl bg-gradient-to-r blue-400 bg-clip-text text-transparent'>
                 Drop-In
               </span>
             </div>
@@ -38,7 +38,7 @@ const Navbar = () => {
               className='text-gray-300 hover:text-white font-medium transition-colors duration-300 relative group'
             >
               Profile
-              <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300 group-hover:w-full'></span>
+              <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full'></span>
             </Link>
             <button 
               className='bg-red-500/20 hover:bg-red-500 text-red-400 hover:text-white font-medium py-2 px-4 rounded-lg border border-red-500/30 hover:border-red-500 transition-all duration-300' 

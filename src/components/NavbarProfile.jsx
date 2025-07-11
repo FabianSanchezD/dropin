@@ -36,7 +36,7 @@ const NavbarProfile = () => {
               className='bg-blue-500/20 hover:bg-blue-500 text-blue-400 hover:text-white font-medium py-2 px-4 rounded-lg border border-blue-500/30 hover:border-blue-500 transition-all duration-300'
             >
               Dashboard
-              <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-400 transition-all duration-300 group-hover:w-full'></span>
+              <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full'></span>
             </Link>
             <button 
               className='bg-red-500/20 hover:bg-red-500 text-red-400 hover:text-white font-medium py-2 px-4 rounded-lg border border-red-500/30 hover:border-red-500 transition-all duration-300' 

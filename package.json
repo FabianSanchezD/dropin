@@ -10,11 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mui/x-date-pickers": "^8.7.0",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.50.0",
     "@tailwindcss/vite": "^4.1.10",
     "react": "^19.1.0",
+    "react-calendar-datetime-picker": "^1.7.5",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-multi-carousel": "^2.8.6",

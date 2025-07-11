@@ -1,13 +1,25 @@
 import { supabase } from '../supabase-client'
 import { useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
+import { DtPicker } from 'react-calendar-datetime-picker'
+import 'react-calendar-datetime-picker/dist/style.css'
 
 const MeetupCreation = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const [data, setData] = useState(null);
-    const [formData, setFormData] = useState({name: "", interests: [], campus: ""})
+    const [date, setDate] = useState(null)
+    const [formData, setFormData] = useState({
+        title: "", 
+        description: "", 
+        start_time: null, 
+        end_time: null, 
+        max_attendees: 6, 
+        location: "", 
+        interest: "", 
+        campus: ""
+    })
     const [existingData, setExistingData] = useState(null);
 
     let interests = {"cal":"Cálculo y Álgebra Lineal",
@@ -20,6 +32,14 @@ const MeetupCreation = () => {
     let campus = {"teccar":"Tecnológico de Costa Rica Cartago",
                 "ucrsj":"Universidad de Costa Rica San José"
     }
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+
+        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+        console.log(formData)
+    };
+
 
     useEffect(() => {
         async function initializeMeetupCreation() {
@@ -43,12 +63,7 @@ const MeetupCreation = () => {
                 } else if (existingUserData && existingUserData.length > 0) {
                   console.log('Existing user data:', existingUserData[0]);
                   setExistingData(existingUserData[0]);
-                  
-                  setFormData({
-                    name: existingUserData[0].name || "",
-                    interests: existingUserData[0].interests || [],
-                    campus: existingUserData[0].campus || ""
-                  });
+
                 } else {
                   console.log('No existing profile data found');
                 }
@@ -86,8 +101,230 @@ const MeetupCreation = () => {
 
   return (
     <div className="pt-20 min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900">
-      <div className="px-8 py-8">
-        
+      <div className="px-8 py-8 max-w-4xl mx-auto">
+        <div className="mb-8">
+          <button 
+            onClick={() => navigate('/dashboard')}
+            className="text-blue-400 hover:text-blue-300 font-medium mb-4 flex items-center gap-2"
+          >
+            ← Back to Dashboard
+          </button>
+        </div>
+
+        {/* Main Form Container */}
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+          <div className="mb-8">
+            <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2">
+              Create New Meetup
+            </h1>
+            <p className="text-gray-300 text-lg">
+              Organize a study session or social gathering with your peers
+            </p>
+          </div>
+
+          <form className="space-y-8">
+            {/* Title Field */}
+            <div className="space-y-3">
+              <label htmlFor="title" className="block text-white font-semibold text-lg">
+                Title
+                <span className="text-blue-400 text-sm ml-2 font-normal">(Keep it friendly!)</span>
+              </label>
+              <input 
+                type="text" 
+                id="title" 
+                name="title" 
+                value={formData.title} 
+                onChange={handleChange}
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+                placeholder="Example: Estudio de Cálculo para el 3er examen"
+              />
+            </div>
+
+            {/* Description Field */}
+            <div className="space-y-3">
+              <label htmlFor="description" className="block text-white font-semibold text-lg">
+                Description
+                <span className="text-blue-400 text-sm ml-2 font-normal">(Keep it friendly, too!)</span>
+              </label>
+              <textarea 
+                id="description" 
+                name="description" 
+                rows="4"
+                value={formData.description} 
+                onChange={handleChange}
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 resize-none"
+                placeholder="Example: Estudiaremos todo el temario para estar preparados para la prueba del lunes."
+              />
+            </div>
+
+            {/* Location Field */}
+            <div className="space-y-3">
+              <label htmlFor="location" className="block text-white font-semibold text-lg">
+                Location
+              </label>
+              <input 
+                type="text" 
+                id="location" 
+                name="location" 
+                value={formData.location} 
+                onChange={handleChange}
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+                placeholder="Example: Library, Building A, Room 101"
+              />
+            </div>
+
+            {/* Max Attendees Field */}
+            <div className="space-y-3">
+              <label htmlFor="max_attendees" className="block text-white font-semibold text-lg">
+                Maximum Attendees
+              </label>
+              <input 
+                type="number" 
+                id="max_attendees" 
+                name="max_attendees" 
+                min="1"
+                max="50"
+                value={formData.max_attendees} 
+                onChange={handleChange}
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+                placeholder="5"
+              />
+            </div>
+
+            {/* Date and Time Picker */}
+            <div className="space-y-3">
+              <label className="block text-white font-semibold text-lg">
+                Date & Time Range
+              </label>
+              <div className="bg-white/10 border border-white/20 rounded-xl p-4">
+                <DtPicker 
+                  onChange={setDate}
+                  type='range'
+                  withTime
+                  showWeekend
+                  placeholder="Select start and end date/time"
+                />
+              </div>
+            </div>
+
+            {/* Interest Field */}
+            <div className="space-y-4">
+              <label className="block text-white font-semibold text-lg">
+                Subject/Interest
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <label className="flex items-center space-x-3 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 cursor-pointer group">
+                  <input 
+                    type="radio" 
+                    name="interest" 
+                    value="cal"
+                    checked={formData.interest === 'cal'}
+                    onChange={handleChange}
+                    className="w-5 h-5 text-blue-500 bg-white/10 border-white/20 focus:ring-blue-400 focus:ring-2"
+                  />
+                  <span className="text-white group-hover:text-blue-200 transition-colors">Cálculo y Álgebra Lineal</span>
+                </label>
+                
+                <label className="flex items-center space-x-3 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 cursor-pointer group">
+                  <input 
+                    type="radio" 
+                    name="interest" 
+                    value="coffee"
+                    checked={formData.interest === 'coffee'}
+                    onChange={handleChange}
+                    className="w-5 h-5 text-blue-500 bg-white/10 border-white/20 focus:ring-blue-400 focus:ring-2"
+                  />
+                  <span className="text-white group-hover:text-blue-200 transition-colors">Break de Café</span>
+                </label>
+
+                <label className="flex items-center space-x-3 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 cursor-pointer group">
+                  <input 
+                    type="radio" 
+                    name="interest" 
+                    value="introp"
+                    checked={formData.interest === 'introp'}
+                    onChange={handleChange}
+                    className="w-5 h-5 text-blue-500 bg-white/10 border-white/20 focus:ring-blue-400 focus:ring-2"
+                  />
+                  <span className="text-white group-hover:text-blue-200 transition-colors">Introducción a la Programación</span>
+                </label>
+                
+                <label className="flex items-center space-x-3 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 cursor-pointer group">
+                  <input 
+                    type="radio" 
+                    name="interest" 
+                    value="discrete"
+                    checked={formData.interest === 'discrete'}
+                    onChange={handleChange}
+                    className="w-5 h-5 text-blue-500 bg-white/10 border-white/20 focus:ring-blue-400 focus:ring-2"
+                  />
+                  <span className="text-white group-hover:text-blue-200 transition-colors">Matemática Discreta</span>
+                </label>
+                
+                <label className="flex items-center space-x-3 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 cursor-pointer group md:col-span-2">
+                  <input 
+                    type="radio" 
+                    name="interest" 
+                    value="foc"
+                    checked={formData.interest === 'foc'}
+                    onChange={handleChange}
+                    className="w-5 h-5 text-blue-500 bg-white/10 border-white/20 focus:ring-blue-400 focus:ring-2"
+                  />
+                  <span className="text-white group-hover:text-blue-200 transition-colors">Fundamentos de Organización de Computadores</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Campus Field */}
+            <div className="space-y-4">
+              <label className="block text-white font-semibold text-lg">
+                Campus
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <label className="flex items-center space-x-3 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 cursor-pointer group">
+                  <input 
+                    type="radio" 
+                    name="campus" 
+                    value="teccar"
+                    checked={formData.campus === 'teccar'}
+                    onChange={handleChange}
+                    className="w-5 h-5 text-blue-500 bg-white/10 border-white/20 focus:ring-blue-400 focus:ring-2"
+                  />
+                  <span className="text-white group-hover:text-blue-200 transition-colors">Tecnológico de Costa Rica Cartago</span>
+                </label>
+                
+                <label className="flex items-center space-x-3 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 cursor-pointer group">
+                  <input 
+                    type="radio" 
+                    name="campus" 
+                    value="ucrsj"
+                    checked={formData.campus === 'ucrsj'}
+                    onChange={handleChange}
+                    className="w-5 h-5 text-blue-500 bg-white/10 border-white/20 focus:ring-blue-400 focus:ring-2"
+                  />
+                  <span className="text-white group-hover:text-blue-200 transition-colors">Universidad de Costa Rica San José</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-6">
+              <button 
+                type="submit"
+                className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-4 px-6 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                Create Meetup
+              </button>
+              <button 
+                type="button"
+                onClick={() => navigate('/dashboard')}
+                className="flex-1 sm:flex-none border-2 border-gray-400 text-gray-300 hover:text-white hover:border-white font-semibold py-4 px-6 rounded-xl transition-all duration-300"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   )

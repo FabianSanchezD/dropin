@@ -138,7 +138,7 @@ const ProfileDetails = () => {
                   <div className="pt-6 text-center">
                     <button 
                     onClick={() => navigate('/profile/updater')}
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+                    className="bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300">
                       Edit Profile
                     </button>
                   </div>
