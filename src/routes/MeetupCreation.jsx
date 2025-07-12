@@ -1,8 +1,6 @@
 import { supabase } from '../supabase-client'
 import { useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
-import { DtPicker } from 'react-calendar-datetime-picker'
-import 'react-calendar-datetime-picker/dist/style.css'
 
 const MeetupCreation = () => {
     const [user, setUser] = useState(null);
@@ -32,14 +30,6 @@ const MeetupCreation = () => {
     let campus = {"teccar":"Tecnológico de Costa Rica Cartago",
                 "ucrsj":"Universidad de Costa Rica San José"
     }
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-
-        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-        console.log(formData)
-    };
-
 
     useEffect(() => {
         async function initializeMeetupCreation() {
@@ -88,6 +78,101 @@ const MeetupCreation = () => {
         initializeMeetupCreation();
       }, [navigate]);
 
+      
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+
+        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+        console.log(formData)
+    };
+
+    const handleDateChange = (field, value) => {
+      setFormData(prev => ({
+        ...prev,
+        [field]: value ? new Date(value) : null
+      }));
+    };
+
+    // function to determine status based on start_time
+    const getMeetupStatus = (startTime, endTime) => {
+      const now = new Date();
+      const start = new Date(startTime);
+      const end = new Date(endTime);
+      
+      // Calculate time difference in minutes
+      const timeDiffMinutes = (start - now) / (1000 * 60);
+      
+      if (now > end) {
+        return 'inactive'; // Meetup has ended
+      } else if (now >= start && now <= end) {
+        return 'active'; // Meetup is happening rn
+      } else if (timeDiffMinutes <= 30 && timeDiffMinutes > 0) {
+        return 'soon'; // Meetup starts within 30 minutes
+      } else {
+        return 'scheduled'; // Meetup is scheduled for future
+      }
+    };
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      console.log(formData);
+      console.log('meetup data:', user);
+      
+      try {
+        if (!formData.start_time || !formData.end_time) {
+          alert('Please select both start and end times for the meetup.');
+          return;
+        }
+
+        if (new Date(formData.start_time) >= new Date(formData.end_time)) {
+          alert('End time must be after start time.');
+          return;
+        }
+
+        if (new Date(formData.start_time) < new Date()) {
+          alert('Start time cannot be in the past.');
+          return;
+        } 
+
+        const status = getMeetupStatus(formData.start_time, formData.end_time);
+        
+        const { data: insertedData, error } = await supabase
+          .from('meetups')
+          .insert({
+          title: formData.title,
+          description: formData.description,
+          start_time: formData.start_time.toISOString(),
+          end_time: formData.end_time.toISOString(),
+          current_attendees: 1,
+          max_attendees: parseInt(formData.max_attendees),
+          location: formData.location,
+          interest: formData.interest,
+          campus: formData.campus,
+          attendees: [existingData?.name || 'Anonymous'],
+          created_by: existingData?.name || 'Anonymous',
+          created_at: new Date().toISOString(),
+          status: status
+        })
+        .select()
+        
+        if (error) {
+          console.error('Error creating meetup:', error);
+          alert('Error creating meetup. Please try again.');
+        } else {
+          console.log('Meetup created successfully:', insertedData);
+          alert('Meetup created successfully!');
+          // go to created meetup
+          if (insertedData && insertedData.length > 0) {
+            navigate(`/meetup/${insertedData[0].id}`);
+          } else {
+            navigate('/dashboard');
+          }
+        }
+      } catch (err) {
+        console.error('Error saving meetup:', err);
+      }
+    };
+
   if (loading) {
     return (
       <div className="pt-20 min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 flex items-center justify-center">
@@ -118,7 +203,7 @@ const MeetupCreation = () => {
               Create New Meetup
             </h1>
             <p className="text-gray-300 text-lg">
-              Organize a study session or social gathering with your peers
+              Organize a study session or a break with people from campus
             </p>
           </div>
 
@@ -169,7 +254,7 @@ const MeetupCreation = () => {
                 value={formData.location} 
                 onChange={handleChange}
                 className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
-                placeholder="Example: Library, Building A, Room 101"
+                placeholder="Example: Cubículo 12, Librería José Figueres Ferrer"
               />
             </div>
 
@@ -191,20 +276,43 @@ const MeetupCreation = () => {
               />
             </div>
 
-            {/* Date and Time Picker */}
+            {/* Start Date and Time */}
             <div className="space-y-3">
               <label className="block text-white font-semibold text-lg">
-                Date & Time Range
+                Start Date and Time
               </label>
-              <div className="bg-white/10 border border-white/20 rounded-xl p-4">
-                <DtPicker 
-                  onChange={setDate}
-                  type='range'
-                  withTime
-                  showWeekend
-                  placeholder="Select start and end date/time"
-                />
-              </div>
+              <input 
+                type="datetime-local"
+                name="start_time"
+                value={formData.start_time ? 
+                  new Date(formData.start_time.getTime() - formData.start_time.getTimezoneOffset() * 60000)
+                    .toISOString().slice(0, 16) : ''}
+                onChange={(e) => handleDateChange('start_time', e.target.value)}
+                min={new Date().toISOString().slice(0, 16)} // Prevent past dates
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+                required
+              />
+            </div>
+
+            {/* End Date and Time */}
+            <div className="space-y-3">
+              <label className="block text-white font-semibold text-lg">
+                End Date and Time
+              </label>
+              <input 
+                type="datetime-local"
+                name="end_time"
+                value={formData.end_time ? 
+                  new Date(formData.end_time.getTime() - formData.end_time.getTimezoneOffset() * 60000)
+                    .toISOString().slice(0, 16) : ''}
+                onChange={(e) => handleDateChange('end_time', e.target.value)}
+                min={formData.start_time ? 
+                  new Date(formData.start_time.getTime() - formData.start_time.getTimezoneOffset() * 60000)
+                    .toISOString().slice(0, 16) : 
+                  new Date().toISOString().slice(0, 16)} // End time must be after start time
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300"
+                required
+              />
             </div>
 
             {/* Interest Field */}
@@ -311,7 +419,8 @@ const MeetupCreation = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
               <button 
                 type="submit"
-                className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-4 px-6 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                onClick={handleSubmit}
+                className="flex-1 bg-gradient-to-r from-blue-700 to-blue-400 text-white font-semibold py-4 px-6 rounded-xl hover:from-blue-400 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Create Meetup
               </button>

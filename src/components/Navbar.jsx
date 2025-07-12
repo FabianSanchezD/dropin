@@ -1,18 +1,19 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../supabase-client'
 
 const Navbar = () => {
   let location = useLocation();
   let navigate = useNavigate();
+  const { id } = useParams(); // We get the ID from the URL
 
   async function signOutUser() {
     const { error } = await supabase.auth.signOut();
     navigate('/login');
   }
 
-  if (location.pathname === '/dashboard') {
+  if (location.pathname === '/dashboard' || location.pathname === '/meetup/create' || location.pathname ===  `/meetup/${id}`) {
     return (
       <>
         <nav className='bg-neutral-900/95 backdrop-blur-sm shadow-lg border-b border-white/10 flex items-center justify-between py-4 px-8 lg:px-32 fixed top-0 left-0 w-full z-50'>
@@ -81,12 +82,12 @@ const Navbar = () => {
               to='/about' 
               className={`font-medium transition-colors duration-300 relative group ${
                 location.pathname === '/about' 
-                  ? 'text-purple-400' 
+                  ? 'text-blue-400' 
                   : 'text-gray-300 hover:text-white'
               }`}
             >
               About
-              <span className={`absolute -bottom-1 left-0 h-0.5 bg-purple-400 transition-all duration-300 ${
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-blue-400 transition-all duration-300 ${
                 location.pathname === '/about' ? 'w-full' : 'w-0 group-hover:w-full'
               }`}></span>
             </Link>
