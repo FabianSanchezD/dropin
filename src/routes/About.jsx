@@ -69,7 +69,7 @@ const About = () => {
                   <div className="w-2 h-2 bg-blue-400 rounded-full mt-3 flex-shrink-0"></div>
                   <div>
                     <h3 className="text-white font-semibold mb-1">Instant Meetups</h3>
-                    <p className="text-gray-300 text-sm">No planning needed - create and join in seconds</p>
+                    <p className="text-gray-300 text-sm">No planning needed, create and join in seconds</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -110,9 +110,9 @@ const About = () => {
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { name: "React", icon: "⚛️" },
+                  { name: "React + Vite", icon: "⚛️" },
                   { name: "Supabase", icon: "🔋" },
-                  { name: "Tailwind", icon: "🎨" },
+                  { name: "Tailwind CSS", icon: "🎨" },
                   { name: "Passion", icon: "❤️" }
                 ].map((tech, index) => (
                   <div key={index} className="text-center p-4 bg-white/5 rounded-lg border border-white/10">
@@ -136,7 +136,6 @@ const About = () => {
                 href="mailto:fabiansanchezd@outlook.com" 
                 className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
               >
-                <span>📮</span>
                 fabiansanchezd@outlook.com
               </a>
             </div>

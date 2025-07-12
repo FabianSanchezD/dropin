@@ -138,28 +138,9 @@ const Login = () => {
           />
         </div>
 
-        {/* Features Preview */}
-        <div className="mt-8 text-center">
-          <p className="text-gray-400 text-sm mb-4">Join students who are already using Drop-In to:</p>
-          <div className="grid grid-cols-3 gap-4 text-xs">
-            <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-              <div className="text-lg mb-1">📚</div>
-              <div className="text-gray-300 font-medium">Study Together</div>
-            </div>
-            <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-              <div className="text-lg mb-1">☕</div>
-              <div className="text-gray-300 font-medium">Coffee Chats</div>
-            </div>
-            <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-              <div className="text-lg mb-1">🤝</div>
-              <div className="text-gray-300 font-medium">Make Friends</div>
-            </div>
-          </div>
-        </div>
-
         {/* Footer */}
         <div className="mt-8 text-center text-xs text-gray-500">
-          <p>By signing up, you agree to connect with your campus community</p>
+          <p>By signing up, you agree to connect with your campus community.</p>
         </div>
       </div>
 
