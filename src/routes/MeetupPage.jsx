@@ -10,6 +10,7 @@ const MeetupPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
+  const [userProfileName, setUserProfileName] = useState(null);
 
   let interests = {"cal":"Cálculo y Álgebra Lineal",
               "foc":"Fundamentos de Organización de Computadores",
@@ -25,10 +26,15 @@ const MeetupPage = () => {
   useEffect(() => {
     async function fetchMeetupData() {
       try {
+        let userId;
         // Get the user
         const { data: userData } = await supabase.auth.getUser();
         if (userData?.user) {
           setUser(userData.user);
+          console.log(userData.user)
+
+
+          let userId = userData.user.id;
         } else {
           navigate('/login');
           return;
@@ -40,6 +46,20 @@ const MeetupPage = () => {
           .select('*')
           .eq('id', id)
           .single(); 
+
+        // Fetch user profile data
+        const { data: fetchedUserData, error: fetchedUserError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', userId); // Fixed: use .eq() instead of .match()
+
+          if (fetchedUserData && fetchedUserData.length > 0) {
+            const NameOfTheUser = fetchedUserData[0].name
+            console.log(NameOfTheUser, "username")
+            setUserProfileName(NameOfTheUser); // Store the name in state
+          } else {
+            const NameOfTheUser = null
+          }
 
         if (meetupError) {
           console.error('Error fetching meetup:', meetupError);
@@ -62,6 +82,49 @@ const MeetupPage = () => {
   }, [id, navigate]);
 
   console.log('Meetup data:', meetup);
+
+  const joiningMeetup = async () => {
+    try {
+      if (meetup.attendees && meetup.attendees.includes(userProfileName)) {
+      alert('You are already attending this meetup!');
+      return;
+    }
+
+    // Check if meetup is full
+    if (meetup.current_attendees >= meetup.max_attendees) {
+      alert('Sorry, this meetup is full!');
+      return;
+    }
+
+    // Update the meetup with new attendee
+    const { data, error: meetupJoiningError } = await supabase
+      .from('meetups')
+      .update({ 
+        current_attendees: meetup.current_attendees + 1,
+        attendees: [...(meetup.attendees || []), userProfileName]
+      })
+      .eq('id', meetup.id)
+      .select(); 
+
+    if (meetupJoiningError) {
+      console.error('Error joining meetup:', meetupJoiningError);
+      alert('Failed to join meetup. Please try again.');
+    } else {
+      console.log('Successfully joined meetup:', data);
+      alert('Successfully joined the meetup!');
+      
+      // Update local state instead of reloading the page
+      setMeetup(prev => ({
+        ...prev,
+        current_attendees: prev.current_attendees + 1,
+        attendees: [...(prev.attendees || []), userProfileName || user?.email]
+      }));
+    }
+  } catch (err) {
+    console.error('Error joining meetup:', err);
+    alert('An unexpected error occurred. Please try again.');
+  }
+};
 
   if (loading) {
     return (
@@ -120,9 +183,20 @@ const MeetupPage = () => {
                 </p>
               </div>
               <div className="ml-4">
+                {(meetup.status === "active") ?
                 <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm">
                   Active
                 </span>
+                : (meetup.status === "inactive") ? 
+                <span className="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm">
+                   Inactive
+                </span> : (meetup.status === "soon") ?
+                <span className="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full text-sm">
+                   Soon
+                </span> :
+                <span className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm">
+                   Scheduled
+                </span>}
               </div>
             </div>
 
@@ -176,9 +250,9 @@ const MeetupPage = () => {
               </div>
             </div>
 
-            {/* Action Buttons, not currently working */}
+            {/* Action Button, joining a meetup*/}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-blue-800 transition-all duration-300 flex-1">
+              <button onClick={joiningMeetup} className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-blue-800 transition-all duration-300 flex-1">
                 Join Meetup
               </button>
             </div>
