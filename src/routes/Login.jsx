@@ -105,9 +105,9 @@ const Login = () => {
                 input: 'auth-input',
               }
             }}
-            providers={['google', 'facebook', 'twitter']}
             redirectTo={window.location.origin + '/dashboard'}
             onlyThirdPartyProviders={false}
+            providers={[]}
             magicLink={true}
             showLinks={true}
             localization={{
@@ -119,7 +119,6 @@ const Login = () => {
                   password_input_placeholder: 'Your password',
                   button_label: 'Sign up',
                   loading_button_label: 'Signing up ...',
-                  social_provider_text: 'Sign up with {{provider}}',
                   link_text: "Don't have an account? Sign up",
                   confirmation_text: 'Check your email for the confirmation link'
                 },
@@ -130,7 +129,6 @@ const Login = () => {
                   password_input_placeholder: 'Your password',
                   button_label: 'Sign in',
                   loading_button_label: 'Signing in ...',
-                  social_provider_text: 'Sign in with {{provider}}',
                   link_text: 'Already have an account? Sign in'
                 }
               }
