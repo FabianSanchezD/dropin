@@ -62,9 +62,12 @@ const Dashboard = () => {
                 const NameOfTheUser = null
               }
             
+            const userCampus = fetchedUserData && fetchedUserData.length > 0 ? fetchedUserData[0].campus : null;
+            
             const { data: fetchedData, error: fetchedError } = await supabase
               .from('meetups')
-              .select('*');
+              .select('*')
+              .eq('campus', userCampus);
 
             if (fetchedError) {
               console.log('Error fetching meetups:', fetchedError);
