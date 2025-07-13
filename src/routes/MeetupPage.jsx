@@ -178,7 +178,7 @@ const MeetupPage = () => {
 
             {/* Action Buttons, not currently working */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 flex-1">
+              <button className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-blue-800 transition-all duration-300 flex-1">
                 Join Meetup
               </button>
             </div>
