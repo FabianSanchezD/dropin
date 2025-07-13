@@ -11,6 +11,7 @@ const MeetupPage = () => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [userProfileName, setUserProfileName] = useState(null);
+  const [attending, setAttending] = useState(false);
 
   let interests = {"cal":"Cálculo y Álgebra Lineal",
               "foc":"Fundamentos de Organización de Computadores",
@@ -22,19 +23,19 @@ const MeetupPage = () => {
   let campus = {"teccar":"Tecnológico de Costa Rica Cartago",
                 "ucrsj":"Universidad de Costa Rica San José"
     }
+
   
   useEffect(() => {
     async function fetchMeetupData() {
       try {
-        let userId;
+        let userId; 
         // Get the user
         const { data: userData } = await supabase.auth.getUser();
         if (userData?.user) {
           setUser(userData.user);
           console.log(userData.user)
 
-
-          let userId = userData.user.id;
+          userId = userData.user.id; 
         } else {
           navigate('/login');
           return;
@@ -53,20 +54,34 @@ const MeetupPage = () => {
           .select('*')
           .eq('id', userId); // Fixed: use .eq() instead of .match()
 
-          if (fetchedUserData && fetchedUserData.length > 0) {
-            const NameOfTheUser = fetchedUserData[0].name
-            console.log(NameOfTheUser, "username")
-            setUserProfileName(NameOfTheUser); // Store the name in state
-          } else {
-            const NameOfTheUser = null
+          try {
+            console.log(fetchedUserData, "fetcheduserdata")
+          setUserProfileName(fetchedUserData[0].name)
+          } catch {
+            setUserProfileName(null)
           }
 
+          
         if (meetupError) {
           console.error('Error fetching meetup:', meetupError);
           setError(meetupError);
         } else if (meetupData) {
           setMeetup(meetupData);
           console.log('Fetched meetup:', meetupData);
+          
+          // Check attendance afte meetup data is available
+          try {
+            if (meetupData.attendees && meetupData.attendees.includes(userProfileName)) {
+              setAttending(true);
+              console.log("changed attending")
+            } else {
+              setAttending(false);
+              console.log('else')
+            }
+          } catch {
+            setAttending(false);
+            console.log('catch')
+          }
         } else {
           setError({ message: 'Meetup not found' });
         }
@@ -117,7 +132,7 @@ const MeetupPage = () => {
       setMeetup(prev => ({
         ...prev,
         current_attendees: prev.current_attendees + 1,
-        attendees: [...(prev.attendees || []), userProfileName || user?.email]
+        attendees: [...(prev.attendees || []), userProfileName]
       }));
     }
   } catch (err) {
@@ -251,11 +266,19 @@ const MeetupPage = () => {
             </div>
 
             {/* Action Button, joining a meetup*/}
+            {(attending === true) ? 
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button onClick={joiningMeetup} className="bg-gradient-to-r from-green-500 to-green-700 text-white font-semibold py-3 px-6 rounded-xl hover:from-green-600 hover:to-green-800 transition-all duration-300 flex-1">
+                Joined 
+              </button>
+            </div>
+            :
             <div className="flex flex-col sm:flex-row gap-4">
               <button onClick={joiningMeetup} className="bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-blue-800 transition-all duration-300 flex-1">
                 Join Meetup
               </button>
-            </div>
+            </div>}
+            
           </div>
 
           {/* Additional Information */}
