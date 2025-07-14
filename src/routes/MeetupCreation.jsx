@@ -39,7 +39,6 @@ const MeetupCreation = () => {
             
             if (userData?.user) {
               setUser(userData.user);
-              console.log(userData, "usedata");
               
               // Fetch existing user profile data
               try {
@@ -49,16 +48,12 @@ const MeetupCreation = () => {
                   .eq('id', userData.user.id);
 
                 if (fetchError) {
-                  console.error('Error fetching user profile:', fetchError);
                 } else if (existingUserData && existingUserData.length > 0) {
-                  console.log('Existing user data:', existingUserData[0]);
                   setExistingData(existingUserData[0]);
 
                 } else {
-                  console.log('No existing profile data found');
                 }
               } catch (err) {
-                console.error('Error fetching profile data:', err);
               }
 
             } else {
@@ -67,7 +62,6 @@ const MeetupCreation = () => {
               return;
             }
           } catch (err) {
-            console.log('Auth error:', err);
             navigate('/login');
             return;
           } finally {
@@ -83,7 +77,6 @@ const MeetupCreation = () => {
         const { name, value } = event.target;
 
         setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-        console.log(formData)
     };
 
     const handleDateChange = (field, value) => {
@@ -115,8 +108,6 @@ const MeetupCreation = () => {
 
     const handleSubmit = async (event) => {
       event.preventDefault();
-      console.log(formData);
-      console.log('meetup data:', user);
       
       try {
         if (!formData.start_time || !formData.end_time) {
@@ -156,10 +147,8 @@ const MeetupCreation = () => {
         .select()
         
         if (error) {
-          console.error('Error creating meetup:', error);
           alert('Error creating meetup. Please try again.');
         } else {
-          console.log('Meetup created successfully:', insertedData);
           alert('Meetup created successfully!');
           // go to created meetup
           if (insertedData && insertedData.length > 0) {
@@ -169,7 +158,6 @@ const MeetupCreation = () => {
           }
         }
       } catch (err) {
-        console.error('Error saving meetup:', err);
       }
     };
 

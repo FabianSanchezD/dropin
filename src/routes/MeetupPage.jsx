@@ -33,7 +33,6 @@ const MeetupPage = () => {
         const { data: userData } = await supabase.auth.getUser();
         if (userData?.user) {
           setUser(userData.user);
-          console.log(userData.user)
 
           userId = userData.user.id; 
         } else {
@@ -55,7 +54,6 @@ const MeetupPage = () => {
           .eq('id', userId); // Fixed: use .eq() instead of .match()
 
           try {
-            console.log(fetchedUserData, "fetcheduserdata")
           setUserProfileName(fetchedUserData[0].name)
           } catch {
             setUserProfileName(null)
@@ -63,30 +61,24 @@ const MeetupPage = () => {
 
           
         if (meetupError) {
-          console.error('Error fetching meetup:', meetupError);
           setError(meetupError);
         } else if (meetupData) {
           setMeetup(meetupData);
-          console.log('Fetched meetup:', meetupData);
           
           // Check attendance afte meetup data is available
           try {
             if (meetupData.attendees && meetupData.attendees.includes(userProfileName)) {
               setAttending(true);
-              console.log("changed attending")
             } else {
               setAttending(false);
-              console.log('else')
             }
           } catch {
             setAttending(false);
-            console.log('catch')
           }
         } else {
           setError({ message: 'Meetup not found' });
         }
       } catch (err) {
-        console.error('Error:', err);
         setError(err);
       } finally {
         setLoading(false);
@@ -95,8 +87,6 @@ const MeetupPage = () => {
 
     fetchMeetupData()
   }, [id, navigate]);
-
-  console.log('Meetup data:', meetup);
 
   const joiningMeetup = async () => {
     try {
@@ -122,10 +112,8 @@ const MeetupPage = () => {
       .select(); 
 
     if (meetupJoiningError) {
-      console.error('Error joining meetup:', meetupJoiningError);
       alert('Failed to join meetup. Please try again.');
     } else {
-      console.log('Successfully joined meetup:', data);
       alert('Successfully joined the meetup!');
       
       // Update local state instead of reloading the page
@@ -136,7 +124,6 @@ const MeetupPage = () => {
       }));
     }
   } catch (err) {
-    console.error('Error joining meetup:', err);
     alert('An unexpected error occurred. Please try again.');
   }
 };

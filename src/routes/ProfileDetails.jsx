@@ -39,15 +39,12 @@ const ProfileDetails = () => {
                 .eq('id', userId);
 
               if (fetchedUserError) {
-                console.error('Error fetching user data:', fetchedUserError);
                 setError(fetchedUserError);
               } else {
-                console.log("User profile data:", fetchedUserData);
                 setUserProfileData(fetchedUserData);
               }
 
             } catch (err) {
-              console.log('No user info found.', err);
               setError(err);
             }
           } else {
@@ -56,7 +53,6 @@ const ProfileDetails = () => {
             return;
           }
         } catch (err) {
-          console.log('Auth error:', err);
           navigate('/login');
           return;
         } finally {

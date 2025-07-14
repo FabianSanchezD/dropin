@@ -31,8 +31,6 @@ const ProfileUpdater = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
-    console.log('User:', user);
     
     try {
       const { error } = await supabase
@@ -47,7 +45,6 @@ const ProfileUpdater = () => {
       if (error) {
         console.error('Error updating user data:', error);
       } else {
-        console.log('User data updated successfully');
         // Navigate to profile details after successful update
         navigate('/profile');
       }
@@ -64,7 +61,6 @@ const ProfileUpdater = () => {
             
             if (userData?.user) {
               setUser(userData.user);
-              console.log(userData, "usedata");
               
               // Fetch existing user profile data
               try {
@@ -76,7 +72,6 @@ const ProfileUpdater = () => {
                 if (fetchError) {
                   console.error('Error fetching user profile:', fetchError);
                 } else if (existingUserData && existingUserData.length > 0) {
-                  console.log('Existing user data:', existingUserData[0]);
                   setExistingData(existingUserData[0]);
                   
                   setFormData({
@@ -85,7 +80,6 @@ const ProfileUpdater = () => {
                     campus: existingUserData[0].campus || ""
                   });
                 } else {
-                  console.log('No existing profile data found');
                 }
               } catch (err) {
                 console.error('Error fetching profile data:', err);
@@ -97,7 +91,6 @@ const ProfileUpdater = () => {
               return;
             }
           } catch (err) {
-            console.log('Auth error:', err);
             navigate('/login');
             return;
           } finally {

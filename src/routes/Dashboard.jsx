@@ -26,19 +26,13 @@ const Dashboard = () => {
           
           // If user is authenticated, fetch meetups data
           try {
-            console.log('User authenticated, fetching meetups...');
-            console.log('User ID:', userData.user.id);
             const userId = userData.user.id;
             const currentTime = new Date();
-            console.log('Current time:', currentTime);
             const userConfirmedAt = new Date(userData.user.confirmed_at);
-            console.log('User confirmed at:', userConfirmedAt);
             const difference = currentTime - userConfirmedAt; // Fixed: current time minus confirmed time
-            console.log('Time difference (ms):', difference);
             
             // If user was confirmed less than 45 seconds ago, redirect to profile setup
             if (difference < 45000) {
-              console.log('New user detected, redirecting to profile setup');
               navigate('/profile/starter');
               return;
             }
@@ -52,11 +46,8 @@ const Dashboard = () => {
               if (fetchedUserData && fetchedUserData.length > 0) {
 
                 const NameOfTheUser = fetchedUserData[0].name
-                console.log(fetchedUserData)
                 const userInterests = fetchedUserData[0].interests || [];
                 setUserUpdated(userInterests)
-                console.log(userUpdated, "interests")
-                console.log(NameOfTheUser, "username")
                 setUserProfileName(NameOfTheUser); // Store the name in state
               } else {
                 const NameOfTheUser = null
@@ -70,15 +61,11 @@ const Dashboard = () => {
               .eq('campus', userCampus);
 
             if (fetchedError) {
-              console.log('Error fetching meetups:', fetchedError);
               setError(fetchedError);
             } else {
               setData(fetchedData);
-              console.log('Successfully fetched data:', fetchedData);
-              console.log('Number of meetups:', fetchedData?.length || 0);
             }
           } catch (err) {
-            console.log('Meetups fetch error:', err);
             // Don't set error for meetups, just log it since the table might not exist yet
           }
         } else {
@@ -87,7 +74,6 @@ const Dashboard = () => {
           return;
         }
       } catch (err) {
-        console.log('Auth error:', err);
         navigate('/login');
         return;
       } finally {

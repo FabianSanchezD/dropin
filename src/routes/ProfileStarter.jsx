@@ -30,8 +30,6 @@ const ProfileStarter = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
-    console.log('User:', user);
     
     try {
       const { error } = await supabase
@@ -46,7 +44,6 @@ const ProfileStarter = () => {
       if (error) {
         console.error('Error inserting user data:', error);
       } else {
-        console.log('User data saved successfully');
         // Navigate to dashboard after successful save
         navigate('/dashboard');
       }
@@ -63,7 +60,6 @@ const ProfileStarter = () => {
             
             if (userData?.user) {
               setUser(userData.user);
-              console.log(userData, "usedata")
               // If user is authenticated, start form
 
             } else {
@@ -72,7 +68,6 @@ const ProfileStarter = () => {
               return;
             }
           } catch (err) {
-            console.log('Auth error:', err);
             navigate('/login');
             return;
           } finally {
