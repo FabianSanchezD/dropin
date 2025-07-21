@@ -33,7 +33,6 @@ const MeetupPage = () => {
         const { data: userData } = await supabase.auth.getUser();
         if (userData?.user) {
           setUser(userData.user);
-
           userId = userData.user.id; 
         } else {
           navigate('/login');
@@ -51,28 +50,25 @@ const MeetupPage = () => {
         const { data: fetchedUserData, error: fetchedUserError } = await supabase
           .from('users')
           .select('*')
-          .eq('id', userId); // Fixed: use .eq() instead of .match()
+          .eq('id', userId);
 
-          try {
-          setUserProfileName(fetchedUserData[0].name)
-          } catch {
-            setUserProfileName(null)
-          }
+        let userName = null;
+        try {
+          userName = fetchedUserData[0].name;
+          setUserProfileName(userName);
+        } catch {
+          setUserProfileName(null);
+        }
 
-          
         if (meetupError) {
           setError(meetupError);
         } else if (meetupData) {
           setMeetup(meetupData);
           
-          // Check attendance afte meetup data is available
-          try {
-            if (meetupData.attendees && meetupData.attendees.includes(userProfileName)) {
-              setAttending(true);
-            } else {
-              setAttending(false);
-            }
-          } catch {
+          // Check attendance after both meetup and user data are available
+          if (meetupData.attendees && userName && meetupData.attendees.includes(userName)) {
+            setAttending(true);
+          } else {
             setAttending(false);
           }
         } else {
@@ -85,7 +81,7 @@ const MeetupPage = () => {
       }
     }
 
-    fetchMeetupData()
+    fetchMeetupData();
   }, [id, navigate]);
 
   const joiningMeetup = async () => {
@@ -122,6 +118,7 @@ const MeetupPage = () => {
         current_attendees: prev.current_attendees + 1,
         attendees: [...(prev.attendees || []), userProfileName]
       }));
+      setAttending(true); // Add this line to update the button state
     }
   } catch (err) {
     alert('An unexpected error occurred. Please try again.');

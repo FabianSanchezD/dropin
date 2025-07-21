@@ -290,7 +290,7 @@ const Dashboard = () => {
                         );
                       } else {
                         return (
-                          <div className="text-center py-8 bg-white/5 rounded-xl p-6 border border-white/10 text-center">
+                          <div className="py-8 bg-white/5 rounded-xl p-6 border border-white/10 text-center">
                             <div className="text-4xl mb-4">📡</div>
                             <h3 className="text-white font-semibold mb-2 ">No live meetups right now</h3>
                             <p className="text-gray-400 text-sm mb-4">
